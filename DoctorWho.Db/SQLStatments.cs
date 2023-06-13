@@ -18,5 +18,15 @@ namespace DoctorWho.Db
                                                                return @CompanionName
                                                                END ;";
 
-       }
+        public static string CreateEnemyNameFunction = @"CREATE FUNCTION fnEnemies (@EpisodeId INT)
+                                                         RETURNS VARCHAR(50) AS
+                                                         BEGIN
+                                                            DECLARE @EnemyName VARCHAR(50);
+	                                                        SELECT @EnemyName=[EnemyName]
+	                                                        FROM EnemyEpisode Episodes JOIN  Enemies Enemy ON Episodes.EnemiesEnemyId=Enemy.EnemyId
+	                                                        WHERE Episodes.EpisodeId=@EpisodeId;
+                                                            return @EnemyName 
+                                                         END ;";
+
+         }
 }
