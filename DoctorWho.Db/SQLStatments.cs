@@ -31,7 +31,7 @@ namespace DoctorWho.Db
         public static string CanclleEpisodesWithoutDoctorsQuery=@"UPDATE Episodes 
                                                                   SET Title=CONCAT(Title,'_CANCELLED')
                                                                   WHERE DoctorId IS NULL AND Title NOT LIKE '%CANCELLED%';";
-        
+
         public static string EpisodesSummaryProcedure = @"CREATE PROCEDURE dbo.spSummariseEpisodes AS
                                                           BEGIN
                                                              SELECT companionName AS FrequentCompanions
@@ -43,5 +43,9 @@ namespace DoctorWho.Db
                                                              where EnemyId IN (SELECT TOP 3 EnemiesEnemyId FROM dbo.EnemyEpisode);
                                                           END;";
 
-  }
+        public static string CreateEpisodeView = @"CREATE VIEW viewEpisodes AS
+                                                   SELECT AuthorName, DoctorName, dbo.fnCompanions(Episodes.EpisodeId) AS CompanionName,dbo.fnEnemies(Episodes.EpisodeId) AS EnemyName
+                                                   FROM Episodes Episodes, Authors Authors, Doctors Doctors
+                                                   where Episodes.AuthorId=Authors.AuthorId AND Episodes.DoctorId=Doctors.DoctorId;";
+    }
 }
