@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DoctorWho.Db
+﻿namespace DoctorWho.Db
 {
     public class SQLStatments
     {
-       public static string CreateCompanionNameFunction = @"CREATE FUNCTION fnCompanions (@EpisodeId INT)
+        public static string CreateCompanionNameFunction = @"CREATE FUNCTION fnCompanions (@EpisodeId INT)
                                                             RETURNS VARCHAR(50) AS
                                                             BEGIN
                                                                DECLARE @CompanionName VARCHAR(50);
@@ -28,7 +22,7 @@ namespace DoctorWho.Db
                                                             return @EnemyName 
                                                          END ;";
 
-        public static string CanclleEpisodesWithoutDoctorsQuery=@"UPDATE Episodes 
+        public static string CanclleEpisodesWithoutDoctorsQuery = @"UPDATE Episodes 
                                                                   SET Title=CONCAT(Title,'_CANCELLED')
                                                                   WHERE DoctorId IS NULL AND Title NOT LIKE '%CANCELLED%';";
 

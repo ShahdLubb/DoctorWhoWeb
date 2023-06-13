@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DoctorWho.Db.Models
+﻿namespace DoctorWho.Db.Models
 {
     public class Doctor
     {
@@ -15,6 +9,6 @@ namespace DoctorWho.Db.Models
         public DateTime FirstEpisodeDate { get; set; }
         public DateTime LastEpisodeDate { get; set; }
 
-        public ICollection<Episode> Episodes { get; set; }=new List<Episode>();
+        public ICollection<Episode> Episodes { get; set; } = new List<Episode>();
     }
 }

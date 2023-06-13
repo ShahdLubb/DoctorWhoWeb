@@ -1,15 +1,9 @@
 ﻿using DoctorWho.Db.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DoctorWho.Db
 {
-    public class DoctorWhoCoreDbContext:DbContext
+    public class DoctorWhoCoreDbContext : DbContext
     {
         public DbSet<Author> Authors { get; set; }
         public DbSet<Episode> Episodes { get; set; }
@@ -21,9 +15,7 @@ namespace DoctorWho.Db
         {
             optionsBuilder.UseSqlServer(
               "Data Source=DESKTOP-8BNUKJL;Initial Catalog = DoctorWhoCore;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"
-            ).LogTo(Console.WriteLine,
-                    new[] { DbLoggerCategory.Database.Command.Name },
-                    LogLevel.Information);
+            );
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -81,10 +73,10 @@ namespace DoctorWho.Db
                 new Episode { EpisodeId = 8, SeriesNumber = 7, EpisodeNumber = 5, EpisodeType = "Sci-Fi Adventure", Title = "The Angels Take Manhattan", EpisodeDate = new DateTime(2012, 9, 29), AuthorId = 3, DoctorId = 3 },
                 new Episode { EpisodeId = 9, SeriesNumber = 8, EpisodeNumber = 11, EpisodeType = "Sci-Fi Adventure", Title = "Dark Water", EpisodeDate = new DateTime(2014, 11, 1), AuthorId = 4, DoctorId = 4 },
                 new Episode { EpisodeId = 10, SeriesNumber = 12, EpisodeNumber = 10, EpisodeType = "Adventure, Drama", Title = "The Timeless Children", EpisodeDate = new DateTime(2020, 3, 1), AuthorId = 5, DoctorId = 5 }
-              
+
             );
 
-          
+
         }
 
     }

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DoctorWho.Db.Models
+﻿namespace DoctorWho.Db.Models
 {
     public class Episode
     {
@@ -21,7 +14,7 @@ namespace DoctorWho.Db.Models
 
         public Author Author { get; set; }
         public Doctor Doctor { get; set; }
-        public ICollection<Companion> Companions { get; set; }=new List<Companion>();
-        public ICollection<Enemy> Enemies { get; set; }=new List<Enemy>();
+        public ICollection<Companion> Companions { get; set; } = new List<Companion>();
+        public ICollection<Enemy> Enemies { get; set; } = new List<Enemy>();
     }
 }

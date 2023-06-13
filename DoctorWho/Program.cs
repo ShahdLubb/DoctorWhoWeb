@@ -1,19 +1,56 @@
 ﻿using DoctorWho.Db;
+using DoctorWho.Db.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoctorWho
 {
     internal class Program
     {
-
+        static DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
         static void Main(string[] args)
         {
-            ConnectExistingEpisodesAndEnemies();
-            ConnectExistingEpisodesAndCompanions();
+            var EpisodesList = _context.Episodes.ToList();
+            printEnemeyForAllEpisodes(EpisodesList);
+            printECompanionForAllEpisodes(EpisodesList);
+        }
+        public static void printECompanionForAllEpisodes(List<Episode> EpisodesList)
+        {
+            Console.WriteLine("**********************************");
+            Console.WriteLine(" Companion for every Episode: ");
+            foreach (Episode episode in EpisodesList)
+            {
+                Console.Write($"{episode.Title} :");
+                foreach (string e in GetCompanionByEpisode(episode.EpisodeId))
+                {
+                    Console.WriteLine(e);
+                }
+            }
+        }
+        public static List<string> GetCompanionByEpisode(int EpisodeId)
+        {
+            var EpisodeCompanion = _context.Database.SqlQuery<string>($"SELECT dbo.fnCompanions({EpisodeId});").ToList();
+            return EpisodeCompanion;
+        }
+        public static void printEnemeyForAllEpisodes(List<Episode> EpisodesList)
+        {
+            Console.WriteLine("**********************************");
+            Console.WriteLine(" Enemy for every Episode: ");
+            foreach (Episode episode in EpisodesList)
+            {
+                Console.Write($"{episode.Title} :");
+                foreach (string e in GetEnemyByEpisode(episode.EpisodeId))
+                {
+                    Console.WriteLine(e);
+                }
+            }
+        }
+        public static List<string> GetEnemyByEpisode(int EpisodeId)
+        {
+            var EpisodeEnemies = _context.Database.SqlQuery<string>($"SELECT dbo.fnEnemies({EpisodeId});").ToList();
+            return EpisodeEnemies;
         }
         public static void ConnectExistingEpisodesAndEnemies()
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext(); //existing database
             var Episodes = _context.Episodes.ToList();
             var Enemies = _context.Enemies.ToList();
             Episodes[0].Enemies.Add(Enemies[0]);
@@ -26,13 +63,11 @@ namespace DoctorWho
             Episodes[7].Enemies.Add(Enemies[6]);
             Episodes[8].Enemies.Add(Enemies[5]);
             Episodes[9].Enemies.Add(Enemies[7]);
-            var debugview = _context.ChangeTracker.DebugView.ShortView;
             _context.SaveChanges();
         }
 
         public static void ConnectExistingEpisodesAndCompanions()
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext(); //existing database
             var Episodes = _context.Episodes.ToList();
             var companions = _context.Companions.ToList();
             Episodes[0].Companions.Add(companions[0]);
@@ -45,7 +80,6 @@ namespace DoctorWho
             Episodes[7].Companions.Add(companions[5]);
             Episodes[8].Companions.Add(companions[6]);
             Episodes[9].Companions.Add(companions[2]);
-            var debugview = _context.ChangeTracker.DebugView.ShortView;
             _context.SaveChanges();
         }
     }
