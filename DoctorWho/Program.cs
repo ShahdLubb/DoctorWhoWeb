@@ -12,6 +12,16 @@ namespace DoctorWho
             var EpisodesList = _context.Episodes.ToList();
             printEnemeyForAllEpisodes(EpisodesList);
             printECompanionForAllEpisodes(EpisodesList);
+            GetEpisodeSummaryFromProcedure();
+        }
+        public static List<string> GetEpisodeSummaryFromProcedure()
+        {
+            var EpisodeCompanion = _context.Database.SqlQuery<string>($"dbo.spSummariseEpisodes;").ToList();
+            foreach (string s in EpisodeCompanion)
+              {
+                Console.WriteLine(s);
+               }
+           return EpisodeCompanion;
         }
         public static void printECompanionForAllEpisodes(List<Episode> EpisodesList)
         {
