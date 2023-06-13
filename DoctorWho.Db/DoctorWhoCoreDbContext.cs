@@ -10,6 +10,7 @@ namespace DoctorWho.Db
         public DbSet<Companion> Companions { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Enemy> Enemies { get; set; }
+        public DbSet<EpisodeView> ViewEpisodes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -20,6 +21,7 @@ namespace DoctorWho.Db
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<EpisodeView>().HasNoKey().ToView(nameof(ViewEpisodes)); 
             // Inserting Enemies
             modelBuilder.Entity<Enemy>().HasData(
                 new Enemy { EnemyId = 1, EnemyName = "Daleks", EnemyDescription = "Ruthless cyborg conquerors" },

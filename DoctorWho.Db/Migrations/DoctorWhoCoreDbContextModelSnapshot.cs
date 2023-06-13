@@ -20,7 +20,7 @@ namespace DoctorWho.Db.Migrations
                 .HasAnnotation("ProductVersion", "6.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("CompanionEpisode", b =>
                 {
@@ -34,7 +34,7 @@ namespace DoctorWho.Db.Migrations
 
                     b.HasIndex("EpisodeId");
 
-                    b.ToTable("CompanionEpisode");
+                    b.ToTable("CompanionEpisode", (string)null);
                 });
 
             modelBuilder.Entity("DoctorWho.Db.Models.Author", b =>
@@ -43,7 +43,7 @@ namespace DoctorWho.Db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorId"));
 
                     b.Property<string>("AuthorName")
                         .IsRequired()
@@ -51,7 +51,7 @@ namespace DoctorWho.Db.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
 
                     b.HasData(
                         new
@@ -87,7 +87,7 @@ namespace DoctorWho.Db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CompanionId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CompanionId"));
 
                     b.Property<string>("CompanionName")
                         .IsRequired()
@@ -99,7 +99,7 @@ namespace DoctorWho.Db.Migrations
 
                     b.HasKey("CompanionId");
 
-                    b.ToTable("Companions");
+                    b.ToTable("Companions", (string)null);
 
                     b.HasData(
                         new
@@ -152,7 +152,7 @@ namespace DoctorWho.Db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorId"));
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
@@ -172,7 +172,7 @@ namespace DoctorWho.Db.Migrations
 
                     b.HasKey("DoctorId");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Doctors", (string)null);
 
                     b.HasData(
                         new
@@ -228,7 +228,7 @@ namespace DoctorWho.Db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EnemyId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EnemyId"));
 
                     b.Property<string>("EnemyDescription")
                         .IsRequired()
@@ -240,7 +240,7 @@ namespace DoctorWho.Db.Migrations
 
                     b.HasKey("EnemyId");
 
-                    b.ToTable("Enemies");
+                    b.ToTable("Enemies", (string)null);
 
                     b.HasData(
                         new
@@ -299,7 +299,7 @@ namespace DoctorWho.Db.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EpisodeId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EpisodeId"));
 
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
@@ -333,7 +333,7 @@ namespace DoctorWho.Db.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.ToTable("Episodes");
+                    b.ToTable("Episodes", (string)null);
 
                     b.HasData(
                         new
@@ -460,7 +460,7 @@ namespace DoctorWho.Db.Migrations
 
                     b.HasIndex("EpisodeId");
 
-                    b.ToTable("EnemyEpisode");
+                    b.ToTable("EnemyEpisode", (string)null);
                 });
 
             modelBuilder.Entity("CompanionEpisode", b =>

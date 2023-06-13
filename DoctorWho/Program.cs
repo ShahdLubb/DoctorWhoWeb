@@ -1,6 +1,9 @@
 ﻿using DoctorWho.Db;
 using DoctorWho.Db.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System;
+using Microsoft.Identity.Client;
 
 namespace DoctorWho
 {
@@ -12,16 +15,65 @@ namespace DoctorWho
             var EpisodesList = _context.Episodes.ToList();
             printEnemeyForAllEpisodes(EpisodesList);
             printECompanionForAllEpisodes(EpisodesList);
-            GetEpisodeSummaryFromProcedure();
+            var EpisodeSummary = GetEpisodeSummaryFromProcedure();
+            PrintEpisodeSummaryFromProcedure(EpisodeSummary);
+            PrintEpisodeView();
         }
-        public static List<string> GetEpisodeSummaryFromProcedure()
+        public static void PrintEpisodeView()
         {
-            var EpisodeCompanion = _context.Database.SqlQuery<string>($"dbo.spSummariseEpisodes;").ToList();
-            foreach (string s in EpisodeCompanion)
-              {
-                Console.WriteLine(s);
-               }
-           return EpisodeCompanion;
+            foreach(EpisodeView ViewRecord in GetEpisodeView())
+            {
+                Console.WriteLine(ViewRecord.ToString());
+            }
+        }
+        public static List<EpisodeView> GetEpisodeView(){
+            return _context.ViewEpisodes.ToList() ;
+        }
+        public static void PrintEpisodeSummaryFromProcedure(List<List<string>> Summary)
+        {
+            Console.WriteLine("**********************************");
+            Console.WriteLine("-Frequent 3  Companions Then Enemies:");
+            foreach (List<string> model in Summary)
+            {
+                foreach (string value in model)
+                {
+                    Console.WriteLine(value);
+                }
+                Console.WriteLine();
+                
+            }
+        }
+        public static List<List<string>> GetEpisodeSummaryFromProcedure()
+        {
+            List<string> FrequentCompanions = new List<string>();
+            List<string> FrequentEnemies = new List<string>();
+            List<List<string>> EpisodeSummary= new List<List<string>>();
+            EpisodeSummary.Add(FrequentCompanions);
+            EpisodeSummary.Add(FrequentEnemies);
+
+            var database = new DoctorWhoCoreDbContext();
+            var connection = database.Database.GetDbConnection();
+            connection.Open();
+            var command = connection.CreateCommand();
+            command.CommandText = $"dbo.spSummariseEpisodes;";
+            command.CommandType = CommandType.Text;
+            var reader = command.ExecuteReader();
+            while ( reader.Read())
+            {
+                string companion = reader.GetString(0);
+                FrequentCompanions.Add(companion);
+            }
+
+            reader.NextResult();
+
+            while ( reader.Read())
+            {
+                string enemy = reader.GetString(0);
+                FrequentEnemies.Add(enemy);
+            }
+
+           reader.CloseAsync();
+           return EpisodeSummary;
         }
         public static void printECompanionForAllEpisodes(List<Episode> EpisodesList)
         {
