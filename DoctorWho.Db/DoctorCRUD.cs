@@ -1,4 +1,5 @@
 ﻿using DoctorWho.Db.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace DoctorWho.Db
 {
     public static class DoctorCRUD
     {
-        public static void CreateDoctor(Doctor doctor)
+        public static void CreateDoctor(this Doctor doctor)
         {
             DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             _context.Doctors.Add(doctor);
@@ -21,7 +22,7 @@ namespace DoctorWho.Db
             var doctor = _context.Doctors.Find(doctorId);
             return doctor;
         }
-        public static void UpdateDoctor(Doctor doctor)
+        public static void UpdateDoctor(this Doctor doctor)
         {
             DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             _context.Doctors.Update(doctor);
@@ -37,6 +38,11 @@ namespace DoctorWho.Db
                 _context.Doctors.Remove(doctor);
                 _context.SaveChanges();
             }
+        }
+        public static List<Doctor> GetAllDoctors()
+        {
+            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
+            return _context.Doctors.ToList();
         }
     }
 }
