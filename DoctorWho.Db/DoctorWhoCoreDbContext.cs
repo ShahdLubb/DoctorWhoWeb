@@ -21,7 +21,7 @@ namespace DoctorWho.Db
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EpisodeView>().HasNoKey().ToView(nameof(ViewEpisodes)); 
+            modelBuilder.Entity<EpisodeView>().HasNoKey().ToView(nameof(ViewEpisodes));
             // Inserting Enemies
             modelBuilder.Entity<Enemy>().HasData(
                 new Enemy { EnemyId = 1, EnemyName = "Daleks", EnemyDescription = "Ruthless cyborg conquerors" },

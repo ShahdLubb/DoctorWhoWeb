@@ -1,9 +1,4 @@
 ﻿using DoctorWho.Db.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DoctorWho.Db.Repositories
 {
@@ -39,7 +34,7 @@ namespace DoctorWho.Db.Repositories
                 _context.SaveChanges();
             }
         }
-        public  void AddEnemyToEpisode( Episode episode, Enemy enemy)
+        public void AddEnemyToEpisode(Episode episode, Enemy enemy)
         {
             DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             if (episode != null && enemy != null)
@@ -64,7 +59,7 @@ namespace DoctorWho.Db.Repositories
                 _context.SaveChanges();
             }
         }
-        public void AddCompanionToEpisode( Episode episode, Companion companion)
+        public void AddCompanionToEpisode(Episode episode, Companion companion)
         {
             DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             if (episode != null && companion != null)

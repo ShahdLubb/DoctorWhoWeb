@@ -2,8 +2,6 @@
 using DoctorWho.Db.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System;
-using Microsoft.Identity.Client;
 
 namespace DoctorWho
 {
@@ -18,8 +16,9 @@ namespace DoctorWho
             var EpisodeSummary = GetEpisodeSummaryFromProcedure();
             PrintEpisodeSummaryFromProcedure(EpisodeSummary);
         }
-        public static List<EpisodeView> GetEpisodeView(){
-            return _context.ViewEpisodes.ToList() ;
+        public static List<EpisodeView> GetEpisodeView()
+        {
+            return _context.ViewEpisodes.ToList();
         }
         public static void PrintEpisodeSummaryFromProcedure(List<List<string>> Summary)
         {
@@ -32,14 +31,14 @@ namespace DoctorWho
                     Console.WriteLine(value);
                 }
                 Console.WriteLine();
-                
+
             }
         }
         public static List<List<string>> GetEpisodeSummaryFromProcedure()
         {
             List<string> FrequentCompanions = new List<string>();
             List<string> FrequentEnemies = new List<string>();
-            List<List<string>> EpisodeSummary= new List<List<string>>();
+            List<List<string>> EpisodeSummary = new List<List<string>>();
             EpisodeSummary.Add(FrequentCompanions);
             EpisodeSummary.Add(FrequentEnemies);
 
@@ -50,7 +49,7 @@ namespace DoctorWho
             command.CommandText = $"dbo.spSummariseEpisodes;";
             command.CommandType = CommandType.Text;
             var reader = command.ExecuteReader();
-            while ( reader.Read())
+            while (reader.Read())
             {
                 string companion = reader.GetString(0);
                 FrequentCompanions.Add(companion);
@@ -58,14 +57,14 @@ namespace DoctorWho
 
             reader.NextResult();
 
-            while ( reader.Read())
+            while (reader.Read())
             {
                 string enemy = reader.GetString(0);
                 FrequentEnemies.Add(enemy);
             }
 
-           reader.CloseAsync();
-           return EpisodeSummary;
+            reader.CloseAsync();
+            return EpisodeSummary;
         }
         public static void printECompanionForAllEpisodes(List<Episode> EpisodesList)
         {

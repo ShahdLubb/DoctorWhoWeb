@@ -1,9 +1,4 @@
 ﻿using DoctorWho.Db.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DoctorWho.Db.Repositories
 {
@@ -14,7 +9,7 @@ namespace DoctorWho.Db.Repositories
         {
             _context = new DoctorWhoCoreDbContext();
         }
-        public void CreateDoctor( Doctor doctor)
+        public void CreateDoctor(Doctor doctor)
         {
             _context.Doctors.Add(doctor);
             _context.SaveChanges();
@@ -24,7 +19,7 @@ namespace DoctorWho.Db.Repositories
             var doctor = _context.Doctors.Find(doctorId);
             return doctor;
         }
-        public void UpdateDoctor( Doctor doctor)
+        public void UpdateDoctor(Doctor doctor)
         {
             _context.Doctors.Update(doctor);
             _context.SaveChanges();
