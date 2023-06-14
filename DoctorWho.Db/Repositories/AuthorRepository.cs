@@ -1,37 +1,37 @@
 ﻿using DoctorWho.Db.Models;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DoctorWho.Db
+namespace DoctorWho.Db.Repositories
 {
-    public static class AuthorCRUD
+    public class AuthorRepository
     {
-        public static void CreateAuthor(this Author author)
+        private readonly DoctorWhoCoreDbContext _context;
+        public AuthorRepository()
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
+            _context = new DoctorWhoCoreDbContext();
+        }
+        public void CreateAuthor(Author author)
+        {
             _context.Authors.Add(author);
             _context.SaveChanges();
         }
-        public static Author RetriveAuthor(int authorId)
+        public Author RetriveAuthor(int authorId)
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             var author = _context.Authors.Find(authorId);
             return author;
         }
-        public static void UpdateAuthor(this Author author)
+        public void UpdateAuthor(Author author)
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             _context.Authors.Update(author);
             _context.SaveChanges();
         }
 
-        public static void DeleteAuthor(int authorId)
+        public void DeleteAuthor(int authorId)
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             var author = _context.Authors.Find(authorId);
             if (author != null)
             {

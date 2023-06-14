@@ -5,32 +5,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DoctorWho.Db
+namespace DoctorWho.Db.Repositories
 {
-    public static class EnemyCRUD
+    public class EnemyRepository
     {
-        public static void CreateEnemy(Enemy enemy)
+        private readonly DoctorWhoCoreDbContext _context;
+        public EnemyRepository()
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
+            _context = new DoctorWhoCoreDbContext();
+        }
+        public void CreateEnemy(Enemy enemy)
+        {
             _context.Enemies.Add(enemy);
             _context.SaveChanges();
         }
-        public static Enemy RetriveDoctor(int enemyId)
+        public Enemy RetriveEnemy(int enemyId)
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             var enemy = _context.Enemies.Find(enemyId);
             return enemy;
         }
-        public static void UpdateDoctor(Enemy enemy)
+        public void UpdateEnemy(Enemy enemy)
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             _context.Enemies.Update(enemy);
             _context.SaveChanges();
         }
 
-        public static void DeleteDoctor(int enemyId)
+        public void DeleteEnemy(int enemyId)
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             var enemy = _context.Enemies.Find(enemyId);
             if (enemy != null)
             {

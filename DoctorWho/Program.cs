@@ -17,14 +17,6 @@ namespace DoctorWho
             printECompanionForAllEpisodes(EpisodesList);
             var EpisodeSummary = GetEpisodeSummaryFromProcedure();
             PrintEpisodeSummaryFromProcedure(EpisodeSummary);
-            PrintEpisodeView();
-        }
-        public static void PrintEpisodeView()
-        {
-            foreach(EpisodeView ViewRecord in GetEpisodeView())
-            {
-                Console.WriteLine(ViewRecord.ToString());
-            }
         }
         public static List<EpisodeView> GetEpisodeView(){
             return _context.ViewEpisodes.ToList() ;

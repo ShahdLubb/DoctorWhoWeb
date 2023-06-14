@@ -5,32 +5,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DoctorWho.Db
+namespace DoctorWho.Db.Repositories
 {
-    public static class CompanionCRUD
+    public class CompanionRepository
     {
-        public static void CreateCompanion(Companion companion)
+        private readonly DoctorWhoCoreDbContext _context;
+        public CompanionRepository()
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
+            _context = new DoctorWhoCoreDbContext();
+        }
+        public void CreateCompanion(Companion companion)
+        {
             _context.Companions.Add(companion);
             _context.SaveChanges();
         }
-        public static Companion RetriveCompanion(int companionId)
+        public Companion RetriveCompanion(int companionId)
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             var companion = _context.Companions.Find(companionId);
             return companion;
         }
-        public static void UpdateCompanion(Companion companion)
+        public void UpdateCompanion(Companion companion)
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             _context.Companions.Update(companion);
             _context.SaveChanges();
         }
 
-        public static void DeleteCompanion(int companionId)
+        public void DeleteCompanion(int companionId)
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             var companion = _context.Companions.Find(companionId);
             if (companion != null)
             {

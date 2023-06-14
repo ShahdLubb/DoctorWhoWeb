@@ -13,4 +13,5 @@ namespace DoctorWho.Db.Models
         public string CompanionName { get; set; }
         public string EnemyName { get; set; }
     }
+
 }
