@@ -10,7 +10,7 @@ namespace DoctorWho.Db
 {
     public static class AuthorCRUD
     {
-        public static void CreateAuthor(Author author)
+        public static void CreateAuthor(this Author author)
         {
             DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             _context.Authors.Add(author);
@@ -22,7 +22,7 @@ namespace DoctorWho.Db
             var author = _context.Authors.Find(authorId);
             return author;
         }
-        public static void UpdateAuthor(Author author)
+        public static void UpdateAuthor(this Author author)
         {
             DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             _context.Authors.Update(author);

@@ -9,7 +9,7 @@ namespace DoctorWho.Db
 {
     public static class EpisodeCRUD
     {
-        public static void CreateEpisode(Episode episode)
+        public static void CreateEpisode(this Episode episode)
         {
             DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             _context.Episodes.Add(episode);
@@ -21,7 +21,7 @@ namespace DoctorWho.Db
             var episode = _context.Episodes.Find(episodeId);
             return episode;
         }
-        public static void UpdateEpisode(Episode episode)
+        public static void UpdateEpisode(this Episode episode)
         {
             DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             _context.Episodes.Update(episode);
