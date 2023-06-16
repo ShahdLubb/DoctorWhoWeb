@@ -30,11 +30,21 @@
                                                           BEGIN
                                                              SELECT companionName AS FrequentCompanions
                                                              FROM Companions 
-                                                             where companionId IN (SELECT  Distinct TOP 3 CompanionsCompanionId FROM dbo.CompanionEpisode);
+                                                             where companionId IN (
+                                                             SELECT TOP 3 CompanionsCompanionId 
+                                                             FROM CompanionEpisode
+                                                             GROUP BY CompanionsCompanionId
+                                                             ORDER BY COUNT(*) DESC
+                                                             );
    
                                                              SELECT EnemyName AS FrequentEnemies
                                                              FROM Enemies
-                                                             where EnemyId IN (SELECT  Distinct TOP 3 EnemiesEnemyId FROM dbo.EnemyEpisode);
+                                                             where EnemyId IN (
+                                                             SELECT TOP 3 EnemiesEnemyId
+                                                             FROM dbo.EnemyEpisode
+                                                             GROUP BY EnemiesEnemyId
+                                                             ORDER BY COUNT(*) DESC                                                             
+                                                             );
                                                           END;";
 
         public static string CreateEpisodeView = @"CREATE VIEW viewEpisodes AS
