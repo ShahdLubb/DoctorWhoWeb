@@ -1,8 +1,8 @@
-﻿using DoctorWho.Db.Models;
-
+﻿using DoctorWho.Domain.Entities;
+using DoctorWho.Domain.Interfaces.IReporitories;
 namespace DoctorWho.Db.Repositories
 {
-    public class CompanionRepository
+    public class CompanionRepository : ICompanionRepository
     {
         private readonly DoctorWhoCoreDbContext _context;
         public CompanionRepository()

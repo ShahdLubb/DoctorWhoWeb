@@ -1,4 +1,4 @@
-﻿using DoctorWho.Db.Models;
+﻿using DoctorWho.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoctorWho.Db

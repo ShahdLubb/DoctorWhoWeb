@@ -1,8 +1,10 @@
-﻿using DoctorWho.Db.Models;
+﻿
+using DoctorWho.Domain.Entities;
+using DoctorWho.Domain.Interfaces.IReporitories;
 
 namespace DoctorWho.Db.Repositories
 {
-    public class AuthorRepository
+    public class AuthorRepository : IAuthorRepository
     {
         private readonly DoctorWhoCoreDbContext _context;
         public AuthorRepository()

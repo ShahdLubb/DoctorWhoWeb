@@ -1,4 +1,4 @@
-﻿namespace DoctorWho.Db.Models
+﻿namespace DoctorWho.Domain.Entities
 {
     public class Companion
     {
