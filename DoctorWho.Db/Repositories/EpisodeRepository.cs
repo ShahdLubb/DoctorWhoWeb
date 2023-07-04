@@ -1,5 +1,8 @@
 ﻿using DoctorWho.Domain.Entities;
 using DoctorWho.Domain.Interfaces.IReporitories;
+using Microsoft.EntityFrameworkCore;
+using System;
+
 namespace DoctorWho.Db.Repositories
 {
     public class EpisodeRepository : IEpisodeRepository
@@ -16,7 +19,7 @@ namespace DoctorWho.Db.Repositories
         }
         public Episode RetriveEpisode(int episodeId)
         {
-            var episode = _context.Episodes.Find(episodeId);
+            var episode = _context.Episodes.Include(episode => episode.Doctor).Include(episode => episode.Author).FirstOrDefault(episode=>episode.EpisodeId == episodeId);
             return episode;
         }
         public void UpdateEpisode(Episode episode)
@@ -38,8 +41,11 @@ namespace DoctorWho.Db.Repositories
         {
             if (episode != null && enemy != null)
             {
-                episode.Enemies.Add(enemy);
-                _context.SaveChanges();
+                if (!episode.Enemies.Contains(enemy))
+                {
+                    episode.Enemies.Add(enemy);
+                    _context.SaveChanges();
+                }
             }
             else
             {
@@ -52,18 +58,17 @@ namespace DoctorWho.Db.Repositories
             var episode = RetriveEpisode(episodeId);
             var enemy = _context.Enemies.Find(enemyId);
 
-            if (episode != null && enemy != null)
-            {
-                episode.Enemies.Add(enemy);
-                _context.SaveChanges();
-            }
+            AddEnemyToEpisode(episode, enemy);
         }
         public void AddCompanionToEpisode(Episode episode, Companion companion)
         {
             if (episode != null && companion != null)
             {
-                episode.Companions.Add(companion);
-                _context.SaveChanges();
+                if (!episode.Companions.Contains(companion))
+                {
+                    episode.Companions.Add(companion);
+                    _context.SaveChanges();
+                }
             }
             else
             {
@@ -75,11 +80,11 @@ namespace DoctorWho.Db.Repositories
             var episode = RetriveEpisode(episodeId);
             var companion = _context.Companions.Find(companionId);
 
-            if (episode != null && companion != null)
-            {
-                episode.Companions.Add(companion);
-                _context.SaveChanges();
-            }
+            AddCompanionToEpisode(episode, companion);
+        }
+        public List<Episode> GetAllEpisodes()
+        {
+         return _context.Episodes.Include(episode=>episode.Doctor).Include(episode=>episode.Author).ToList();
         }
 
     }

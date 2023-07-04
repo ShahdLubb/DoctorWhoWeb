@@ -12,5 +12,6 @@ namespace DoctorWho.Domain.Interfaces.IReporitories
         void DeleteEpisode(int episodeId);
         Episode RetriveEpisode(int episodeId);
         void UpdateEpisode(Episode episode);
+         List<Episode> GetAllEpisodes();
     }
 }
