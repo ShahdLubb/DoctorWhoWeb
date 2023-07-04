@@ -5,9 +5,9 @@ namespace DoctorWho.Db.Repositories
     public class EnemyRepository : IEnemyRepository
     {
         private readonly DoctorWhoCoreDbContext _context;
-        public EnemyRepository()
+        public EnemyRepository(DoctorWhoCoreDbContext contex)
         {
-            _context = new DoctorWhoCoreDbContext();
+            _context = contex;
         }
         public void CreateEnemy(Enemy enemy)
         {

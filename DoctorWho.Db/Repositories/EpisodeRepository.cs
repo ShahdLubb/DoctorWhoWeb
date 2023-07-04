@@ -5,9 +5,9 @@ namespace DoctorWho.Db.Repositories
     public class EpisodeRepository : IEpisodeRepository
     {
         private readonly DoctorWhoCoreDbContext _context;
-        public EpisodeRepository()
+        public EpisodeRepository(DoctorWhoCoreDbContext contex)
         {
-            _context = new DoctorWhoCoreDbContext();
+            _context = contex;
         }
         public void CreateEpisode(Episode episode)
         {
@@ -36,7 +36,6 @@ namespace DoctorWho.Db.Repositories
         }
         public void AddEnemyToEpisode(Episode episode, Enemy enemy)
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             if (episode != null && enemy != null)
             {
                 episode.Enemies.Add(enemy);
@@ -61,7 +60,6 @@ namespace DoctorWho.Db.Repositories
         }
         public void AddCompanionToEpisode(Episode episode, Companion companion)
         {
-            DoctorWhoCoreDbContext _context = new DoctorWhoCoreDbContext();
             if (episode != null && companion != null)
             {
                 episode.Companions.Add(companion);

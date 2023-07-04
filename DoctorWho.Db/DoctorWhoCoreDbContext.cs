@@ -12,12 +12,12 @@ namespace DoctorWho.Db
         public DbSet<Enemy> Enemies { get; set; }
         public DbSet<EpisodeView> ViewEpisodes { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public DoctorWhoCoreDbContext(DbContextOptions<DoctorWhoCoreDbContext> options)
+            :base(options)
         {
-            optionsBuilder.UseSqlServer(
-              "Data Source=DESKTOP-8BNUKJL;Initial Catalog = DoctorWhoCore;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"
-            );
+
         }
+     
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

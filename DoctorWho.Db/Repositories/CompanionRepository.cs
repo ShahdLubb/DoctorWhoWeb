@@ -5,9 +5,9 @@ namespace DoctorWho.Db.Repositories
     public class CompanionRepository : ICompanionRepository
     {
         private readonly DoctorWhoCoreDbContext _context;
-        public CompanionRepository()
+        public CompanionRepository(DoctorWhoCoreDbContext contex)
         {
-            _context = new DoctorWhoCoreDbContext();
+            _context = contex;
         }
         public void CreateCompanion(Companion companion)
         {

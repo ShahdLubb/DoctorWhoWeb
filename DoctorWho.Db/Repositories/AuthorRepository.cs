@@ -7,9 +7,9 @@ namespace DoctorWho.Db.Repositories
     public class AuthorRepository : IAuthorRepository
     {
         private readonly DoctorWhoCoreDbContext _context;
-        public AuthorRepository()
+        public AuthorRepository(DoctorWhoCoreDbContext contex)
         {
-            _context = new DoctorWhoCoreDbContext();
+            _context =contex;
         }
         public void CreateAuthor(Author author)
         {

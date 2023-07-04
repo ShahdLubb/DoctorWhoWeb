@@ -5,9 +5,9 @@ namespace DoctorWho.Db.Repositories
     public class DoctorRepository : IDoctorRepository
     {
         private readonly DoctorWhoCoreDbContext _context;
-        public DoctorRepository()
+        public DoctorRepository(DoctorWhoCoreDbContext contex)
         {
-            _context = new DoctorWhoCoreDbContext();
+            _context = contex;
         }
         public void CreateDoctor(Doctor doctor)
         {
