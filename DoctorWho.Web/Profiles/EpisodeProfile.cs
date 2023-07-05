@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DoctorWho.Domain.Entities;
 using DoctorWho.Web.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace DoctorWho.Web.Profiles
 {

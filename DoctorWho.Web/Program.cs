@@ -1,11 +1,12 @@
 using DoctorWho.Db;
+using DoctorWho.Db.Interfaces.IReporitories;
 using DoctorWho.Db.Repositories;
-using DoctorWho.Domain.Interfaces.IReporitories;
+using DoctorWho.Services;
+using DoctorWho.Services.Interfaces;
 using DoctorWho.Web.Filters;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,11 @@ builder.Services.AddScoped<IEpisodeRepository, EpisodeRepository>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IEnemyRepository, EnemyRepository>();
 builder.Services.AddScoped<ICompanionRepository, CompanionRepository>();
+builder.Services.AddScoped<IDoctorService, DoctorService>();
+builder.Services.AddScoped<IEpisodeService, EpisodeService>();
+builder.Services.AddScoped<IEnemyService, EnemyService>();
+builder.Services.AddScoped<ICompanionService, CompanionService>();
+builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddDbContext<DoctorWhoCoreDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DoctorWhoCoreDatabase")));
 builder.Services.AddEndpointsApiExplorer();

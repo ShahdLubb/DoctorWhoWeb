@@ -1,6 +1,6 @@
 ﻿
-using DoctorWho.Domain.Entities;
-using DoctorWho.Domain.Interfaces.IReporitories;
+using DoctorWho.Db.Entities;
+using DoctorWho.Db.Interfaces.IReporitories;
 
 namespace DoctorWho.Db.Repositories
 {
