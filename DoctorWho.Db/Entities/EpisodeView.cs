@@ -1,4 +1,4 @@
-﻿namespace DoctorWho.Domain.Entities
+﻿namespace DoctorWho.Db.Entities
 {
     public class EpisodeView
     {

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using DoctorWho.Db.Repositories;
 using DoctorWho.Domain.Entities;
-using DoctorWho.Domain.Interfaces.IReporitories;
+using DoctorWho.Db.Interfaces.IReporitories;
 using DoctorWho.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using DoctorWho.Services.Interfaces;
 
 namespace DoctorWho.Web.Controllers
 {
@@ -11,30 +11,30 @@ namespace DoctorWho.Web.Controllers
     [ApiController]
     public class EpisodeController : ControllerBase
     {
-        private readonly IEpisodeRepository _episodeRepository;
-        private readonly IDoctorRepository _doctorRepository;
-        private readonly IAuthorRepository _authorRepository;
-        private readonly IEnemyRepository _enemyRepository;
-        private readonly ICompanionRepository _companionRepository;
+        private readonly IEpisodeService _episodeService;
+        private readonly IDoctorService _doctorService;
+        private readonly IAuthorService _authorService;
+        private readonly IEnemyService _enemyService;
+        private readonly ICompanionService _companionService;
         private readonly IMapper _mapper;
-        public EpisodeController(IEpisodeRepository episodeRepository,
-            IDoctorRepository doctorRepository, 
-            IAuthorRepository authorRepository,
-            IEnemyRepository enemyRepository,
-            ICompanionRepository companionRepository,
+        public EpisodeController(IEpisodeService episodeService,
+            IDoctorService doctorService, 
+            IAuthorService authorService,
+            IEnemyService enemyService,
+            ICompanionService companionService,
             IMapper mapper) {
-            _episodeRepository = episodeRepository;
-            _doctorRepository = doctorRepository;
-            _authorRepository = authorRepository;
-            _enemyRepository = enemyRepository;
-            _companionRepository= companionRepository;
+            _episodeService = episodeService;
+            _doctorService = doctorService;
+            _authorService = authorService;
+            _enemyService = enemyService;
+            _companionService= companionService;
             _mapper = mapper;
             
 
         }
         [HttpGet("{EpisodeId}", Name = "GetAnEpisode")]
         public ActionResult GetEpisode(int EpisodeId) {
-            var episode = _episodeRepository.RetriveEpisode(EpisodeId);
+            var episode = _episodeService.GetEpisode(EpisodeId);
             if (episode == null)
             {
                 return NotFound();
@@ -48,7 +48,7 @@ namespace DoctorWho.Web.Controllers
         [HttpGet]
         public ActionResult<List<EpisodeDTO>> GetAllEpisodes()
         {
-            var episodes = _episodeRepository.GetAllEpisodes();
+            var episodes = _episodeService.GetAllEpisodes();
             return Ok(_mapper.Map<IEnumerable<EpisodeDTO>>(episodes));
         }
 
@@ -56,16 +56,16 @@ namespace DoctorWho.Web.Controllers
         public IActionResult CreateEpisode([FromBody] CreateEpisodeDTO toCreateEpisode)
         {
             // check if Episode already exists
-            Episode? exsistingEpisode = _episodeRepository.GetAllEpisodes()
-                                                         .FirstOrDefault(e=>(e.EpisodeNumber==toCreateEpisode.EpisodeNumber) 
-                                                          && (e.SeriesNumber==toCreateEpisode.SeriesNumber));
+            Episode? exsistingEpisode = _episodeService.GetEpisodeByNumberAndSeries(
+                toCreateEpisode.EpisodeNumber, toCreateEpisode.SeriesNumber);
+
             if(exsistingEpisode != null)
             {
                 return BadRequest($"Episode number '{toCreateEpisode.EpisodeNumber}' in series number'{toCreateEpisode.SeriesNumber}' already exists!");
             }
             // check id doctor and author exists by their Id
-            var doctor = _doctorRepository.RetriveDoctor(toCreateEpisode.DoctorId);
-            var author = _authorRepository.RetriveAuthor(toCreateEpisode.AuthorId);
+            var doctor = _doctorService.GetDoctor(toCreateEpisode.DoctorId);
+            var author = _authorService.GetAuthor(toCreateEpisode.AuthorId);
             if(doctor== null && author==null) {
                 return BadRequest("both doctor and author don't exist");
             }
@@ -80,16 +80,16 @@ namespace DoctorWho.Web.Controllers
 
             //Creating the episode
             Episode episode = _mapper.Map<Episode>(toCreateEpisode);
-            _episodeRepository.CreateEpisode(episode);
-            var RouteValues = new { EpisodeId = episode.EpisodeId };
-            return CreatedAtRoute("GetAnEpisode", RouteValues, _mapper.Map<EpisodeDTO>(episode));
+            var createdEpisode=_episodeService.CreateEpisode(episode);
+            var RouteValues = new { EpisodeId = createdEpisode.EpisodeId };
+            return CreatedAtRoute("GetAnEpisode", RouteValues, _mapper.Map<EpisodeDTO>(createdEpisode));
 
         }
         [HttpPost("AddEnemyToEpisode")]
         public ActionResult AddEnemyToEpisode([FromBody] AddEnemyToEpisodeDTO enemyToEpisode)
         {
-            var episode = _episodeRepository.RetriveEpisode(enemyToEpisode.EpisodeId);
-            var enemy=_enemyRepository.RetriveEnemy(enemyToEpisode.EnemyId);
+            var episode = _episodeService.GetEpisode(enemyToEpisode.EpisodeId);
+            var enemy=_enemyService.GetEnemy(enemyToEpisode.EnemyId);
             if(episode == null && enemy == null)
             {
                 return BadRequest("episode and enemy don't exist");
@@ -104,7 +104,7 @@ namespace DoctorWho.Web.Controllers
             }
             else
             {
-                _episodeRepository.AddEnemyToEpisode(episode, enemy);
+                _episodeService.AddEnemyToEpisode(episode, enemy);
                 return Ok();
             }
 
@@ -112,8 +112,8 @@ namespace DoctorWho.Web.Controllers
         [HttpPost("AddCompanionToEpisode")]
         public ActionResult AddCompanionToEpisode([FromBody] AddCompanionToEpisodeDTO CompanionToEpisode)
         {
-            var episode = _episodeRepository.RetriveEpisode(CompanionToEpisode.EpisodeId);
-            var Companion = _companionRepository.RetriveCompanion(CompanionToEpisode.CompanionId);
+            var episode = _episodeService.GetEpisode(CompanionToEpisode.EpisodeId);
+            var Companion = _companionService.GetCompanion(CompanionToEpisode.CompanionId);
             if (episode == null && Companion == null)
             {
                 return BadRequest("episode and Companion don't exist");
@@ -128,7 +128,7 @@ namespace DoctorWho.Web.Controllers
             }
             else
             {
-                _episodeRepository.AddCompanionToEpisode(episode, Companion);
+                _episodeService.AddCompanionToEpisode(episode, Companion);
                 return Ok();
             }
 

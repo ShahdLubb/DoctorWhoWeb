@@ -1,9 +1,9 @@
 ﻿namespace DoctorWho.Web.Validators
 {
-    using DoctorWho.Domain.Entities;
+    using DoctorWho.Web.Models;
     using FluentValidation;
 
-    public class EpisodeValidator : AbstractValidator<Episode>
+    public class EpisodeValidator : AbstractValidator<CreateEpisodeDTO>
     {
         public EpisodeValidator()
         {

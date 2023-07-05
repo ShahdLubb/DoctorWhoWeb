@@ -1,6 +1,6 @@
-﻿using DoctorWho.Domain.Entities;
-
-namespace DoctorWho.Domain.Interfaces.IReporitories
+﻿
+using DoctorWho.Db.Entities;
+namespace DoctorWho.Db.Interfaces.IReporitories
 {
     public interface IAuthorRepository
     {
