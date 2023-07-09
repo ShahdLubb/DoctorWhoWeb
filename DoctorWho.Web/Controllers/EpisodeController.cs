@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using DoctorWho.Domain.Entities;
-using DoctorWho.Db.Interfaces.IReporitories;
 using DoctorWho.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using DoctorWho.Services.Interfaces;
+using DoctorWho.Domain.Interfaces;
 
 namespace DoctorWho.Web.Controllers
 {

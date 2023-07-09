@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DoctorWho.Domain.Entities;
-using DoctorWho.Services.Interfaces;
+using DoctorWho.Domain.Interfaces;
 using DoctorWho.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 

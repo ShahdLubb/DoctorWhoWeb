@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DoctorWho.Db.Interfaces.IReporitories;
 using DoctorWho.Domain.Entities;
-using DoctorWho.Services.Interfaces;
+using DoctorWho.Domain.Interfaces;
 
 namespace DoctorWho.Services
 {

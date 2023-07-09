@@ -1,6 +1,6 @@
 ﻿using DoctorWho.Domain.Entities;
 
-namespace DoctorWho.Services.Interfaces
+namespace DoctorWho.Domain.Interfaces
 {
     public interface IEpisodeService
     {
